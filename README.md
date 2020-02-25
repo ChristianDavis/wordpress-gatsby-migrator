@@ -24,3 +24,5 @@ Run `wordpress-gatsby-migrator INPUT_FILE OUTPUT_DIRECTORY`.
 
 ## Configuration
 config.js has the default configurations.
+
+Modify config.js to update the parsing/formatting, modify template.js for the output template
