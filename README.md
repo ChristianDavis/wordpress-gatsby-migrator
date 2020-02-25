@@ -21,3 +21,6 @@ Run `wordpress-gatsby-migrator INPUT_FILE OUTPUT_DIRECTORY`.
   <a href="https://twitter.com/weiran">Twitter</a> |
   <a href="https://github.com/weiran">GitHub</a>
 </p>
+
+## Configuration
+config.js has the default configurations.
