@@ -1,20 +1,25 @@
 const feedRead = require('davefeedread')
 const TurndownService = require('turndown')
-const turndownService = new TurndownService({
-    headingStyle: 'atx',
-    codeBlockStyle: 'fenced'
-})
+
+// const turndownService = new TurndownService({
+//     headingStyle: 'atx',
+//     codeBlockStyle: 'fenced'
+// })
 const cheerio = require('cheerio')
 const uuid = require('uuid/v4') // v4 generates random UUIDs
 const url = require('url')
 const path = require('path')
 
-const importPosts = async (file) => {
+const importPosts = async (file, options) => {
+
     const feed = await parseFeed(file)
+
+    const { turndownOptions, additionalFields } = options;
+    const turndownService = new TurndownService(turndownOptions)
 
     const isPost = item => item['wp:post_type']['#'] === 'post'
     const isPublished = item => item['wp:status']['#'] === 'publish'
-
+    // const parseContent = item => 
     // Filter for only blog posts
     var items = feed.items.filter(isPost).filter(isPublished)
     
@@ -23,12 +28,13 @@ const importPosts = async (file) => {
         if (!isPost(item)) {
             return
         }
-
+        console.log(item)
         const mappedItem = {
             'title': item.title,
             'date': item.date,
             'content': item['content:encoded']['#'],
             'categories': item.categories,
+            'author': item.author,
             'slug': item['wp:post_name']['#']
         }
 
