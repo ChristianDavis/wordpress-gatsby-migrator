@@ -1,13 +1,25 @@
-const postTemplate = (title, date, passthroughUrl, content) => {
-    const post = 
-`---
+const postTemplate = (title, date, passthroughUrl, content, slug) => {
+  const post = passthroughUrl
+    ? `---
 title: "${title}"
-date: "${date}"${passthroughUrl ? `
-passthroughUrl: ${passthroughUrl}` : ''}
+date: "${date}"
+path: "${slug}"
+templateKey: "BlogPost"
+passthroughUrl: "${passthroughUrl}"
 ---
 
-${content}`
-    return post
-}
+${content}
+`
+    : `---
+title: "${title}"
+date: "${date}"
+path: "${slug}"
+templateKey: "BlogPost"
+---
 
-module.exports = { post: postTemplate }
+${content}
+`;
+  return post;
+};
+
+module.exports = { post: postTemplate };
